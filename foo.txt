@@ -1,0 +1,12 @@
+/home/harry/webservs/hs_test/gallery/scripts/cards.json
+{ attack: 0,
+  cardClass: 'NEUTRAL',
+  cost: 0,
+  dbfId: 52424,
+  faction: 'ALLIANCE',
+  health: 0,
+  id: 'ART_BOT_Bundle_001',
+  name: 'Golden Legendary',
+  rarity: 'LEGENDARY',
+  set: 'TB',
+  type: 'MINION' }

@@ -1,0 +1,18 @@
+{
+  "name": "hs_dev",
+  "version": "0.1.0",
+  "description": "hs deckbuilder development version",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
+    "pg": "^7.11.0",
+    "request": "^2.88.0"
+  }
+}

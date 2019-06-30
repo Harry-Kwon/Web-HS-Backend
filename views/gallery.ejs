@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="gallery-style.css">
+    <%-include('partials/jquery');%>
+  </head>
+
+  <body>
+    <h1>Card Gallery</h1>
+    
+    <div id="card-container">
+      <% for(var i=0; i<cards.length; i++) { %>
+      <a href="#">
+        <img src="<%=cards[i].imageUrl%>">
+      </a>
+      <% } %>
+    </div>
+  </body>
+</html>
