@@ -1,0 +1,83 @@
+query: SELECT version();
+undefined
+query: CREATE TABLE card (
+  id INTEGER UNIQUE NOT NULL PRIMARY KEY,
+  collectible BOOLEAN NOT NULL,
+  slug VARCHAR(50) NOT NULL,
+  classId INTEGER NOT NULL,
+  cardTypeId INTEGER NOT NULL,
+  cardSetId INTEGER NOT NULL,
+  artistName VARCHAR(50),
+  manaCost INTEGER,
+  name VARCHAR(50),
+  text TEXT,
+  image VARCHAR(2000),
+  flavorText TEXT
+);
+
+undefined
+Result {
+  command: 'SELECT',
+  rowCount: 1,
+  oid: null,
+  rows: [
+    {
+      version: 'PostgreSQL 11.4 (Ubuntu 11.4-1.pgdg18.10+1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 8.3.0-6ubuntu1~18.10.1) 8.3.0, 64-bit'
+    }
+  ],
+  fields: [
+    Field {
+      name: 'version',
+      tableID: 0,
+      columnID: 0,
+      dataTypeID: 25,
+      dataTypeSize: -1,
+      dataTypeModifier: -1,
+      format: 'text'
+    }
+  ],
+  _parsers: [ [Function: noParse] ],
+  _types: TypeOverrides {
+    _types: {
+      getTypeParser: [Function: getTypeParser],
+      setTypeParser: [Function: setTypeParser],
+      arrayParser: [Object]
+    },
+    text: {},
+    binary: {}
+  },
+  RowCtor: null,
+  rowAsArray: false
+}
+/home/harry/webservs/hs_test/db/index.js:19
+    throw err;
+    ^
+
+error: relation "card" already exists
+    at Connection.parseE (/home/harry/webservs/hs_test/node_modules/pg/lib/connection.js:602:11)
+    at Connection.parseMessage (/home/harry/webservs/hs_test/node_modules/pg/lib/connection.js:399:19)
+    at Socket.<anonymous> (/home/harry/webservs/hs_test/node_modules/pg/lib/connection.js:121:22)
+    at Socket.emit (events.js:200:13)
+    at addChunk (_stream_readable.js:294:12)
+    at readableAddChunk (_stream_readable.js:275:11)
+    at Socket.Readable.push (_stream_readable.js:210:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:166:17) {
+  name: 'error',
+  length: 98,
+  severity: 'ERROR',
+  code: '42P07',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'heap.c',
+  line: '1084',
+  routine: 'heap_create_with_catalog'
+}

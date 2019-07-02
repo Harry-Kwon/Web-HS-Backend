@@ -3,6 +3,7 @@ const path = require("path");
 const request = require("request");
 const db = require("../db");
 
+const SECRETS=path.join(__dirname,'/../secrets.json');
 const RAW_PATH=path.join(__dirname,'/../assets/cards.json');
 const AUTH_URL="https://us.battle.net/oauth/token";
 const CARDS_URL="https://us.api.blizzard.com/hearthstone/cards"
@@ -10,7 +11,7 @@ const CARDS_URL="https://us.api.blizzard.com/hearthstone/cards"
 function get_access_token(callback) {
 
   //get credentials
-  fs.readFile('../secrets.json', (err, data) => {
+  fs.readFile(SECRETS, (err, data) => {
     if (err) {
       throw err;
     }
