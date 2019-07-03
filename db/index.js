@@ -30,7 +30,15 @@ function init_db() {
   console.log(query(createTableQuery, [], echo));
 }
 
+function insert(table, fields, values, callback) {
+  let fields_string = fields.join(', ');
+  let values_string = values.join(', ');
+  let query = 'INSERT INTO ' + table + ' (' + fields_string + ') VALUES ' + values_string + ';';
+  query(query, [], callback);
+}
+
 module.exports = {
   query: query,
+  insert: insert,
   init_db: init_db
 }
