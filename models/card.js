@@ -1,5 +1,6 @@
 // Object Oriented Model for a Hearthstone Card
 // Harry Kwon
+db = require('../db');
 
 const CARD_FIELDS = ['id', 'collectible', 'slug', 'classId', 'cardTypeId', 'cardSetId', 'rarityId', 'artistName', 'manaCost', 'name', 'text', 'image', 'flavorText'];
 
@@ -11,4 +12,7 @@ function Card(params) {
   });
 }
 
+//Card.prototype.update_db = function(callback) {
+//  db.query(SELECT id FROM
+//}
 module.exports = Card;

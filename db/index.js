@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const {Pool} = require('pg');
 
 const pool = new Pool({
@@ -24,14 +25,12 @@ function echo(err, res) {
 //initialize database
 function init_db() {
   //create tables
-  const createTableQuery = fs.readFileSync('init_database.sql').toString();
+  let init_db_source = path.join(__dirname, '/init_database.sql');
+  const createTableQuery = fs.readFileSync(init_db_source).toString();
   console.log(query(createTableQuery, [], echo));
 }
 
-console.log(query('SELECT version();', [], echo));
-
-init_db();
-
 module.exports = {
-  query: query
+  query: query,
+  init_db: init_db
 }
