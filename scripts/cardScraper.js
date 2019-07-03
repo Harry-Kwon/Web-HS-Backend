@@ -1,6 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 const request = require("request");
+
+const Card = require('../models/card');
 const db = require("../db");
 
 const SECRETS=path.join(__dirname,'/../secrets.json');
@@ -38,13 +40,13 @@ function get_access_token(callback) {
         throw err;
       }
       let access_token = JSON.parse(body)["access_token"];
-      get_card_data(access_token, callback)
+      get_card_data(access_token)
     });
 
   });
 }
 
-function get_card_data(access_token, callback){
+function get_card_data(access_token){
   var cardData=[];
 
   //recursively increment pageNum until current page is equal to total page count
@@ -71,15 +73,14 @@ function get_card_data(access_token, callback){
       res_body= JSON.parse(body);
       let c = res_body["cards"];
       cardData = cardData.concat(c);
-      console.log(cardData[0]);
-      console.log(pageNum);
-      console.log(cardData.length);
 
       let pageCount = parseInt(res_body["pageCount"]);
+      //save cards
       if (pageNum < pageCount) {
         get_page(pageNum+1);
       } else {
-        save_card_data(cardData, callback);
+        cardData.forEach(update_card);
+//        save_card_data(cardData);
       }
     });
   }
@@ -87,20 +88,21 @@ function get_card_data(access_token, callback){
 }
 
 //saves a list of cardData objects to a file
-function save_card_data(cardData, callback) {
+function save_card_data(cardData) {
   fs.writeFile(RAW_PATH, JSON.stringify(cardData), function(){});
-  callback();
 }
 
 // update a single card to the database
 function update_card(cardData) {
-  //
+  let c = new Card(cardData);
+  console.log(c);
+  c.insert_db((err, res) => {
+    if (err) {
+      throw err;
+    }
+  });
 }
 
-function update_db() {
-  let rawCardData = fs.readFileSync(RAW_PATH);
-  let cardData = JSON.parse(rawCardData);
-  console.log(cardData.length);
+if (require.main === module) {
+  get_access_token(()=>{});
 }
-
-get_access_token(()=>{});

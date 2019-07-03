@@ -32,9 +32,14 @@ function init_db() {
 
 function insert(table, fields, values, callback) {
   let fields_string = fields.join(', ');
-  let values_string = values.map((x)=>{return "'"+x+"'";}).join(', ');
+  let values_string = [];
+  for(let i=0; i<values.length; i++) {
+    values_string.push('$'+(i+1));
+  }
+  values_string = values_string.join(', ');
+
   let insert_query = 'INSERT INTO ' + table + ' (' + fields_string + ') VALUES (' + values_string + ');';
-  query(insert_query, [], callback);
+  query(insert_query, values, callback);
 }
 
 module.exports = {
