@@ -43,20 +43,27 @@ function insert(table, fields, values, callback) {
 }
 
 function select(table, params, callback) {
-  let paramsString = [];
-  let keys = Object.keys(params);
-  let values = Object.values(params);
-  console.log(keys);
-  for(let i=0; i<keys.length; i++) {
-    let s = '' + keys[i] + ' = $' + (i+1);
-    console.log(s);
-    paramsString.push(s);
-  }
-  paramsString = paramsString.join(' AND ');
+  let select_query = 'SELECT * FROM ' + table;
 
-  let insert_query = 'SELECT * FROM ' + table + ' WHERE ' + paramsString + ';';
-  console.log(insert_query);
-  query(insert_query, values, (err, res) => {
+  let keys = [];
+  let values = [];
+  if(params !== undefined) {
+    keys = Object.keys(params);
+    values = Object.values(params);
+
+    let paramsString = [];
+    for(let i=0; i<keys.length; i++) {
+      let s = '' + keys[i] + ' = $' + (i+1);
+      console.log(s);
+      paramsString.push(s);
+    }
+    paramsString = paramsString.join(' AND ');
+
+    select_query += ' WHERE ' + paramsString + ';';
+  }
+
+  console.log(select_query);
+  query(select_query, values, (err, res) => {
     if(err) {
       throw err;
     }
@@ -67,10 +74,9 @@ function select(table, params, callback) {
 module.exports = {
   query: query,
   insert: insert,
+  select: select,
   init_db: init_db
 }
 
 if (require.main === module) {
-  //unit test
-  select('card', {collectible:1, classId:2, manaCost:8}, echo);
 }
