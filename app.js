@@ -17,7 +17,7 @@ app.get('/hs', function(req, res){
 
 
 //controllers
-const galleryController = require('./gallery/gallery_controller');
+const galleryController = require('./controllers/gallery_controller');
 galleryController(app);
 
 //start app

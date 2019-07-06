@@ -22,12 +22,17 @@ Card.prototype.insert_db= function(callback) {
 }
 
 Card.getCards = function(params, callback) {
+  Object.keys(params).forEach((key) => {
+    if(!CARD_FIELDS.includes(key)) {
+      delete params[key];
+    }
+  });
   db.select(CARD_TABLE, params, (rows) => {
     let cards = [];
     rows.forEach((x) => {
       cards.push(new Card(x));
     });
-    return callback(cards);
+    callback(cards);
   });
 }
 

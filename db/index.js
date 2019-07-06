@@ -47,7 +47,7 @@ function select(table, params, callback) {
 
   let keys = [];
   let values = [];
-  if(params !== undefined) {
+  if(params !== undefined && Object.keys(params).length>0) {
     keys = Object.keys(params);
     values = Object.values(params);
 
