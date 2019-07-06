@@ -27,7 +27,7 @@ function init_db() {
   //create tables
   let init_db_source = path.join(__dirname, '/init_database.sql');
   const createTableQuery = fs.readFileSync(init_db_source).toString();
-  console.log(query(createTableQuery, [], echo));
+  query(createTableQuery, [], echo);
 }
 
 function insert(table, fields, values, callback) {
@@ -54,7 +54,6 @@ function select(table, params, callback) {
     let paramsString = [];
     for(let i=0; i<keys.length; i++) {
       let s = '' + keys[i] + ' = $' + (i+1);
-      console.log(s);
       paramsString.push(s);
     }
     paramsString = paramsString.join(' AND ');
@@ -62,7 +61,6 @@ function select(table, params, callback) {
     select_query += ' WHERE ' + paramsString + ';';
   }
 
-  console.log(select_query);
   query(select_query, values, (err, res) => {
     if(err) {
       throw err;
@@ -79,4 +77,5 @@ module.exports = {
 }
 
 if (require.main === module) {
+  select('card', {id:254}, console.log);
 }
