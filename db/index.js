@@ -56,7 +56,12 @@ function select(table, params, callback) {
 
   let insert_query = 'SELECT * FROM ' + table + ' WHERE ' + paramsString + ';';
   console.log(insert_query);
-  query(insert_query, values, callback);
+  query(insert_query, values, (err, res) => {
+    if(err) {
+      throw err;
+    }
+    callback(res.rows);
+  });
 }
 
 module.exports = {
