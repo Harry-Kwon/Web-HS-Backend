@@ -42,6 +42,13 @@ function insert(table, fields, values, callback) {
   query(insert_query, values, callback);
 }
 
+function select(table, fields, callback) {
+  let fields_string = fields.join(', ');
+
+  let insert_query = 'SELECT (' + fields_string + ') FROM ' + table;
+  query(insert_query, values, callback);
+}
+
 module.exports = {
   query: query,
   insert: insert,
