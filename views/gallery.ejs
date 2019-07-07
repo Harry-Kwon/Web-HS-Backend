@@ -8,27 +8,46 @@
   <body>
     <h1>Card Gallery</h1>
     
-    <div id="card-container">
-      <form>
-          <input type="text" name="name">
-          <button type="submit">Search</button>
-      </form>
+    <form>
+      <p>Name</p>
+      <!--
+      <input type="text" name="name">
+      -->
+      <p>Manacost</p>
+      <input type="number" name="manacost">
+      <button type="submit">Search</button>
+    </form>
 
-      <script>
-        /*
-        $(document.ready(function() {
-          $('form').on('submit', function() {
-            $.get(
-                window.location.href,
-                function(data) {
-                  alert('page content: ' + data);
-                }
-              );
+    <script>
+      function reloadCards(data) {
+        console.log(data);
+
+        $('#card-container').empty('#');
+        var cardData = data.cards;
+        cardData.forEach((c)=>{
+          $('#card-container').append('<img src=\"'+c.image+'\">');
+        });
+      }
+
+      $(document).ready(function() {
+        $('form').on('submit', function() {
+          var datastring = $('form').serialize();
+          $.ajax({
+            type: "GET",
+            url: "/hs/card",
+            data: datastring,
+            success: function(data) {
+              console.log(data);
+              history.pushState({}, '', '/hs/gallery?'+datastring);
+              reloadCards(data);
+            }
           });
-        }));
-        */
-      </script>
+          return false;
+        });
+      });
+    </script>
 
+    <div id="card-container">
       <% for(var i=0; i<cards.length; i++) { %>
       <a href="#">
         <img src="<%=cards[i].image%>">
