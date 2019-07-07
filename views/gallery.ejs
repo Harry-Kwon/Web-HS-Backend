@@ -9,6 +9,26 @@
     <h1>Card Gallery</h1>
     
     <div id="card-container">
+      <form>
+          <input type="text" name="name">
+          <button type="submit">Search</button>
+      </form>
+
+      <script>
+        /*
+        $(document.ready(function() {
+          $('form').on('submit', function() {
+            $.get(
+                window.location.href,
+                function(data) {
+                  alert('page content: ' + data);
+                }
+              );
+          });
+        }));
+        */
+      </script>
+
       <% for(var i=0; i<cards.length; i++) { %>
       <a href="#">
         <img src="<%=cards[i].image%>">

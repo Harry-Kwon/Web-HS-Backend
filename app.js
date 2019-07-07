@@ -20,5 +20,8 @@ app.get('/hs', function(req, res){
 const galleryController = require('./controllers/gallery_controller');
 galleryController(app);
 
+const cardController = require('./controllers/card_controller');
+cardController(app);
+
 //start app
 app.listen(3000);
