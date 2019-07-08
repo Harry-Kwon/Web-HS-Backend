@@ -14,5 +14,10 @@
     "express": "^4.17.1",
     "pg": "^7.11.0",
     "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.0.1",
+    "eslint-config-google": "^0.13.0",
+    "eslint-plugin-react": "^7.14.2"
   }
 }

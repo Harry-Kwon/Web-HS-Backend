@@ -1,2 +1,5 @@
 secrets.json
 log.txt
+lint.txt
+foo.txt
+./eslint

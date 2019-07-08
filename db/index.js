@@ -2,13 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const {Pool} = require('pg');
 
-const pool = new Pool({
-  user: 'hsuser',
-  host: 'localhost',
-  database: 'hs',
-  password: 'hsuser',
-  port: 5432
-});
+const SECRETS=path.join(__dirname, '../secrets.json');
+
+let data = JSON.parse(fs.readFileSync(SECRETS, {encoding: 'utf8'}));
+const pool = new Pool(data['database']);
 
 function query(text, params, callback) {
   console.log('query: ' + text);
