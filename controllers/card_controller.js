@@ -10,6 +10,5 @@ module.exports = function(app) {
       let payload = {cards: c};
       res.json(payload);
     });
-
   });
 }

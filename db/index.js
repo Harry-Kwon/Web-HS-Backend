@@ -12,6 +12,7 @@ const pool = new Pool({
 
 function query(text, params, callback) {
   console.log('query: ' + text);
+  console.log('values: ' + params);
   return pool.query(text, params, callback);
 }
 
@@ -63,9 +64,10 @@ function select(table, params, callback) {
 
   query(select_query, values, (err, res) => {
     if(err) {
-      throw err;
+      callback(err, null);
+    } else {
+      callback(err, res.rows);
     }
-    callback(res.rows);
   });
 }
 
