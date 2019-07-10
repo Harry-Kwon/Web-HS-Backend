@@ -4,3 +4,4 @@ lint.txt
 foo.txt
 eslint
 *.log
+node_modules/
