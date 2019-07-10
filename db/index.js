@@ -16,7 +16,7 @@ const pool = new Pool(data['database']);
  * Callback for a general database query
  *
  * @callback queryCallback
- * @param {Error} err Error that occured during the callback.
+ * @param {Error} err Error that occured during the query.
  *    Null if no error occurred.
  * @param {obj} res An object containing the response from the query.
  *    Null if error occurred.

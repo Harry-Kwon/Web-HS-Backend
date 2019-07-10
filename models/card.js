@@ -1,42 +1,74 @@
 // Object Oriented Model for a Hearthstone Card
 // Harry Kwon
-db = require('../db');
+const db = require('../db');
 
 const CARD_TABLE = 'card';
-const CARD_FIELDS = ['id', 'collectible', 'slug', 'classid', 'cardtypeid', 'cardsetid', 'rarityid', 'artistname', 'manacost', 'name', 'text', 'image', 'flavortext'];
+const CARD_FIELDS = [
+  'id',
+  'collectible',
+  'slug',
+  'classid',
+  'cardtypeid',
+  'cardsetid',
+  'rarityid',
+  'artistname',
+  'manacost',
+  'name',
+  'text',
+  'image',
+  'flavortext',
+];
 const NULL_INPUTS = ['', undefined, null];
 
-// Card Object Contructor / Factory
-// Takes a dictionary with parameter values
+/**
+ * Represents a card
+ * @constructor
+ * @param [obj] params Dictionary of card parameters
+ */
 var Card = function(params) {
   CARD_FIELDS.forEach((x) => {
     this[x] = params[x];
   });
-}
+};
 
-Card.prototype.insert_db= function(callback) {
+/**
+ * Callback for database queries
+ *
+ * @callback queryCallback
+ * @param {Error} err Error that occured during the query.
+ * @param {obj} res Object containing query data.
+ */
+
+/**
+ * Inserts the current card state into the database as a new row.
+ * @param {queryCallback} callback Callback function for the query.
+ */
+Card.prototype.insert_db = function(callback) {
   let values = [];
   CARD_FIELDS.forEach((field) => {
     values.push(this[field]);
   });
   db.insert(CARD_TABLE, CARD_FIELDS, values, callback);
-}
+};
 
+/**
+ * Gets all cards from the database that match parameters
+ * @param {Obj} params Dictionary containing parameters to search for.
+ * @param {function} callback Callback function that takes an array of Cards.
+ */
 Card.getCards = function(params, callback) {
-  console.log('a');
-  console.log(params);
   Object.keys(params).forEach((key) => {
-    if(!CARD_FIELDS.includes(key)) {
+    if (!CARD_FIELDS.includes(key)) {
       delete params[key];
     }
-    if(NULL_INPUTS.includes(params[key])) {
+    if (NULL_INPUTS.includes(params[key])) {
       delete params[key];
     }
   });
   console.log(params);
 
   db.select(CARD_TABLE, params, (err, rows) => {
-    if(err) {
+    if (err) {
       console.error(err);
     } else {
       let cards=[];
@@ -46,12 +78,14 @@ Card.getCards = function(params, callback) {
       callback(cards);
     }
   });
-}
+};
 
 
 module.exports = Card;
 
 if (require.main === module) {
-  Card.getCards({id:254}, (x)=>{console.log(x)});
+  Card.getCards({id: 254}, (x)=>{
+    console.log(x);
+  });
   Card.getCards({classId: 6, manaCost: 8}, console.log);
 }
