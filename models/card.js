@@ -17,6 +17,7 @@ const CARD_FIELDS = [
   'text',
   'image',
   'flavortext',
+  'lowername'
 ];
 const NULL_INPUTS = ['', undefined, null];
 
@@ -26,6 +27,7 @@ const NULL_INPUTS = ['', undefined, null];
  * @param [obj] params Dictionary of card parameters
  */
 var Card = function(params) {
+  params['lowername'] = params['name'].toLowerCase();
   CARD_FIELDS.forEach((x) => {
     this[x] = params[x];
   });
@@ -67,6 +69,17 @@ Card.getCards = function(params, callback) {
   });
   console.log(params);
 
+  db.query('SELECT * FROM card WHERE lowername LIKE $1;',
+    [`%${params['lowername']}%`],
+    (err, res) => {
+      if(err) {console.error(err);}
+      let rows = res.rows;
+      let cards=rows.map((x)=>new Card(x));
+      callback(cards);
+    });
+
+
+/*
   db.select(CARD_TABLE, params, (err, rows) => {
     if (err) {
       console.error(err);
@@ -78,6 +91,7 @@ Card.getCards = function(params, callback) {
       callback(cards);
     }
   });
+  */
 };
 
 

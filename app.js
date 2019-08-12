@@ -9,12 +9,15 @@ app.set('view engine', 'ejs');
 //static files
 app.use(express.static('./assets'));
 
-app.get('/hs', function(req, res){
-  console.log(req);
-  res.render('home');
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
 });
 
-
+app.get('/', (req, res) => {
+  res.redirect('/gallery');
+});
 
 //controllers
 const galleryController = require('./controllers/gallery_controller');
@@ -24,4 +27,4 @@ const cardController = require('./controllers/card_controller');
 cardController(app);
 
 //start app
-app.listen(3000);
+app.listen(3001);

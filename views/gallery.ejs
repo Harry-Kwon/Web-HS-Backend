@@ -3,6 +3,11 @@
   <head>
     <link rel="stylesheet" href="gallery-style.css">
     <%-include('partials/jquery');%>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/reat-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+    <script src='gallery.js'></script>
+    <script src='card_container.js'></script>
   </head>
 
   <body>
@@ -10,40 +15,12 @@
     
     <form>
       <p>Name</p>
-      <input type="text" name="name">
+      <input type="text" name="name" class='card-search-input'>
       <p>Manacost</p>
-      <input type="number" name="manacost">
+      <input type="number" name="manacost" class='card-search-input'>
       <button type="submit">Search</button>
     </form>
 
-    <script>
-      function reloadCards(data) {
-        console.log(data);
-
-        $('#card-container').empty('#');
-        var cardData = data.cards;
-        cardData.forEach((c)=>{
-          $('#card-container').append('<img src=\"'+c.image+'\">');
-        });
-      }
-
-      $(document).ready(function() {
-        $('form').on('submit', function() {
-          var datastring = $('form').serialize();
-          $.ajax({
-            type: "GET",
-            url: "/hs/card",
-            data: datastring,
-            success: function(data) {
-              console.log(data);
-              history.pushState({}, '', '/hs/gallery?'+datastring);
-              reloadCards(data);
-            }
-          });
-          return false;
-        });
-      });
-    </script>
 
     <div id="card-container">
       <% for(var i=0; i<cards.length; i++) { %>

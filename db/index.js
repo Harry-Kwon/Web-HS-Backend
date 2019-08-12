@@ -31,6 +31,7 @@ const pool = new Pool(data['database']);
  *    takes error and response data
  */
 function query(text, params, callback) {
+  console.log(text);
   pool.query(text, params, callback);
 }
 
@@ -123,5 +124,5 @@ module.exports = {
 };
 
 if (require.main === module) {
-  select('card', {id: 254}, console.log);
+  initDatabase();
 }
